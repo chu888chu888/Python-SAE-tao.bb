@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>淘宝宝短网址</title>
+    <meta name="description" content="淘宝宝短网址,淘宝短网址,淘宝客短网址, 网址缩短服务,短网址生成,网址二维码" />
+    <link rel="icon" href="http://www.taobao.com/favicon.ico" type="image/x-icon">
+    <link href="http://lib.sinaapp.com/js/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        #error{
+            width: 100%;
+            float: left;
+        }
+
+
+        .logo {
+            background: url("http://img01.taobaocdn.com/tps/i1/T1trD5XllgXXaur3jj-180-65.png") no-repeat;
+            width: 180px ;
+            height: 65px;
+            margin: 100px auto 25px;
+        }
+
+        #urlinput, #urloutput{
+            border: 5px solid #fd7500;
+            font-size: 1.5em;
+            height: 1.1em;
+            width: 100%;
+        }
+
+        .btn-taobb {
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            background-color: #ff7800;
+            *background-color: #fd6500;
+            background-image: -moz-linear-gradient(top, #fb8500, #fd6500);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fb8500), to(#fd6500));
+            background-image: -webkit-linear-gradient(top, #fb8500, #fd6500);
+            background-image: -o-linear-gradient(top, #fb8500, #fd6500);
+            background-image: linear-gradient(to bottom, #fb8500, #fd6500);
+            background-repeat: repeat-x;
+            border-color: #fd6500 #fd6500 #ad6704;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffb8500', endColorstr='#fffd6500', GradientType=0);
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        }
+        .btn-taobb:hover,
+        .btn-taobb:focus,
+        .btn-taobb:active,
+        .btn-taobb.active,
+        .btn-taobb.disabled,
+        .btn-taobb[disabled] {
+            color: #ffffff;
+            background-color: #fd6500;
+            *background-color: #df8505;
+        }
+
+        .btn-taobb:active,
+        .btn-taobb.active {
+            background-color: #c67605 \9;
+        }
+
+        .btn-group.open .btn.dropdown-toggle {
+            background-color: #ff7800;
+        }
+        .dropdown-menu > li > a:hover,
+        .dropdown-menu > li > a:focus,
+        .dropdown-submenu:hover > a,
+        .dropdown-submenu:focus > a {
+            color: #ffffff;
+            text-decoration: none;
+            background-color: #fb6500;
+            background-image: -moz-linear-gradient(top, #fb8500, #fb6500);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fb8500), to(#fb6500));
+            background-image: -webkit-linear-gradient(top, #fb8500, #fb6500);
+            background-image: -o-linear-gradient(top, #fb8500, #fb6500);
+            background-image: linear-gradient(to bottom, #fb8500, #fb6500);
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffb8500', endColorstr='#fffb6500', GradientType=0);
+        }
+
+        #footer{
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container text-center">
+    <div id="error" class="alert alert-error hide">
+    </div>
+    <div class="logo">
+    </div>
+
+    <div class="row">
+        <div class="span8 offset2">
+            <input autofocus="true" autocomplete="off" value="" id="urlinput" type="url" placeholder="输入你想变短的网址如 http://www.taobao.com" />
+            <input id="urloutput" value="" readonly="readonly" type="url" autocomplete="off" autofocus="true" style="width: 33%; display: none; background-color: inherit; cursor: auto " />
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="span8 offset2">
+            <!--<div id="working" style="position: absolute;" class="hide">-->
+                <!--<img src="http://img01.taobaocdn.com/tps/i1/T1cKm3XkRpXXXXXXXX-48-48.gif" />-->
+            <!--</div>-->
+            <button id="work" class="btn btn-taobb btn-large" type="button" data-loading-text="tao.bb ..." autocomplete="off">tao.bb</button>
+            <div class="btn-group">
+                <button id="qrcode" class="btn btn-taobb btn-large hide" style="font-size: 14px" data-placement="bottom">
+                    <i class="icon-qrcode icon-white"></i>
+                </button>
+                <button id="more" class="btn btn-taobb btn-large hide" type="button" data-loading-text="tao.bbing ..." autocomplete="off">再淘一个</button>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">-->
+
+        <!--<div class="span4 offset2">-->
+            <!--<table class="table">-->
+                <!--<tr>-->
+                    <!--<td>http://tao.bb/abc</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>http://tao.bb/abc</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>http://tao.bb/abc</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>http://tao.bb/abc</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+
+        <!--</div>-->
+    </div>
+<div id="footer">
+    <div class="container text-center">
+        <p class="muted"><a href="https://github.com/tg123/tao.bb" target="_blank" >Fork on Github </a> | Powered by <img src="http://static.sae.sina.com.cn/image/poweredby/117X12px.gif"></p>
+    </div>
+</div>
+</div>
+
+
+
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script src="http://lib.sinaapp.com/js/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script>
+
+    $(function(){
+
+
+        var input = $("#urlinput");
+        var output = $("#urloutput");
+
+        output.click(function(){
+            $(this).select();
+        });
+
+
+        var showerror = function(text){
+            var error = $("#error");
+            error.text(text);
+            error.slideDown();
+        }
+
+        $("#work").click(function(){
+
+            var url = input.val();
+
+            url = url.trim();
+
+            if(!url){
+                showerror("请输入网址");
+                input.focus();
+                return;
+            }
+
+            $("#error").slideUp();
+            $(this).button("loading");
+            $("#working").show();
+            $.post("/d/save",{url: input.val()},null,'json')
+                    .success(function(data){
+                        var key = data["key"];
+                        var err = data["err"] ? data["err"] : "发生错误请重试";
+                        if(key){
+                            input.animate({
+                                        width: "33%"
+                                    },
+                                    {
+                                        complete: function(){
+                                            output.val("http://tao.bb/" + key);
+                                            $("input").toggle();
+                                            $("button").toggle("fast");
+                                            $("input").select();
+                                        }
+                                    });
+                        }else{
+                            showerror(err);
+                        }
+                    })
+                    .error(function(){
+                        showerror("网络错误");
+                    })
+                    .complete(function() {
+                        $("#working").hide();
+                        $("#work").button("reset");
+                    });
+
+        });
+
+        $("#more").click(function(){
+            output.val("");
+            $("#qrcode").popover("hide");
+            $("input").toggle();
+            input.animate({
+                        width: '100%'
+                    },
+                    {
+                        complete: function(){
+                            $("input").select();
+                            $("button").toggle("fast");
+                        }
+                    });
+        });
+
+
+        $("#qrcode").popover({
+            html: true,
+            content: function(){
+
+                var url = output.val();
+
+                if(!url){
+                    return false;
+                }
+
+                url += "/qrcode.png";
+                //url = "http://ta0bb.sinaapp.com/Y06rW/qrcode.png";
+
+                var div = $("<div></div>");
+                div.append($("<span>正在加载二维码.....</span>"))
+                var img = $('<img />');
+                img.prop("src", url);
+
+                img.load(function(){
+                    div.find("span").remove();
+                });
+
+                div.css("width", 188);
+                div.css("heigth", 188);
+
+                div.append(img);
+
+                return div ;
+            }
+        });
+
+        (function(){
+            var wanted = location.pathname.replace( /^\/+|\/+$/g, '' );
+            if (wanted){
+                showerror('您访问的网址：1.不存在 2.不安全(如钓鱼) 3.传播禁止的内容 而无法访问 ');
+            }
+        })();
+    });
+
+</script>
+</body>
+</html>
