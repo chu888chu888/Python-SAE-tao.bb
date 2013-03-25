@@ -13,6 +13,10 @@
             float: left;
         }
 
+	.qwidth{
+            width: 75%;
+            margin: 0 auto 10px;
+	}
 
         .logo {
             background: url("http://img01.taobaocdn.com/tps/i1/T1trD5XllgXXaur3jj-180-65.png") no-repeat;
@@ -92,16 +96,16 @@
     <div class="logo">
     </div>
 
-    <div class="row">
-        <div class="span8 offset2">
+    <div class="row qwidth">
+        <div>
             <input autofocus="true" autocomplete="off" value="" id="urlinput" type="url" placeholder="输入你想变短的网址如 http://www.taobao.com" />
             <input id="urloutput" value="" readonly="readonly" type="url" autocomplete="off" autofocus="true" style="width: 33%; display: none; background-color: inherit; cursor: auto " />
         </div>
     </div>
 
-    <div class="row">
+    <div class="row qwidth">
 
-        <div class="span8 offset2">
+        <div>
             <!--<div id="working" style="position: absolute;" class="hide">-->
                 <!--<img src="http://img01.taobaocdn.com/tps/i1/T1cKm3XkRpXXXXXXXX-48-48.gif" />-->
             <!--</div>-->
@@ -168,7 +172,7 @@
 
             var url = input.val();
 
-            url = url.trim();
+            url = $.trim(url);
 
             if(!url){
                 showerror("请输入网址");
@@ -261,6 +265,10 @@
             if (wanted){
                 showerror('您访问的网址：1.不存在 2.不安全(如钓鱼) 3.传播禁止的内容 而无法访问 ');
             }
+
+	    if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){		
+	    	$("#qrcode").remove(); // fuckyou ie
+	    }
         })();
     });
 
