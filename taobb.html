@@ -100,6 +100,7 @@
         <div>
             <input autofocus="true" autocomplete="off" value="" id="urlinput" type="url" placeholder="输入你想变短的网址如 http://www.taobao.com" />
             <input id="urloutput" value="" readonly="readonly" type="url" autocomplete="off" autofocus="true" style="width: 33%; display: none; background-color: inherit; cursor: auto " />
+
         </div>
     </div>
 
@@ -113,6 +114,9 @@
             <div class="btn-group">
                 <button id="qrcode" class="btn btn-taobb btn-large hide" style="font-size: 14px" data-placement="bottom">
                     <i class="icon-qrcode icon-white"></i>
+                </button>
+                <button id="copytoclip" class="btn btn-taobb btn-large hide" style="font-size: 14px" data-clipboard-target="urloutput">
+                    <i class="icon-share icon-white"></i>
                 </button>
                 <button id="more" class="btn btn-taobb btn-large hide" type="button" data-loading-text="tao.bbing ..." autocomplete="off">再淘一个</button>
             </div>
@@ -149,21 +153,44 @@
 
 <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 <script src="http://lib.sinaapp.com/js/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="http://a.tbcdn.cn/app/dp/s/ZeroClipboard/ZeroClipboard.min.js"></script>
 <script>
 
     $(function(){
 
 
+	var clip = new ZeroClipboard($("#copytoclip"), {
+		moviePath: "//a.tbcdn.cn/app/dp/s/ZeroClipboard/ZeroClipboard.swf",
+		allowScriptAccess : "always",
+		trustedDomains: ["*"]
+	});
+
+	clip.on('complete', function(){
+		showsuccess("已经复制到剪切板");
+	});
+
+	clip.on( 'mouseover', function(client) {
+		$(clip).hide();
+	} );
+
         var input = $("#urlinput");
         var output = $("#urloutput");
+
 
         output.click(function(){
             $(this).select();
         });
 
-
         var showerror = function(text){
             var error = $("#error");
+	    error.removeClass("alert-success").addClass("alert-error");
+            error.text(text);
+            error.slideDown();
+        }
+
+        var showsuccess = function(text){
+            var error = $("#error");
+	    error.removeClass("alert-error").addClass("alert-succuess");
             error.text(text);
             error.slideDown();
         }
@@ -268,6 +295,7 @@
 
 	    if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){		
 	    	$("#qrcode").remove(); // fuckyou ie
+	    	$("#copytoclip").remove(); // fuckyou ie
 	    }
         })();
     });
