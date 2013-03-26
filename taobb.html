@@ -6,6 +6,7 @@
     <meta name="description" content="淘宝宝短网址,淘宝短网址,淘宝客短网址, 网址缩短服务,短网址生成,网址二维码" />
     <link rel="icon" href="http://www.taobao.com/favicon.ico" type="image/x-icon">
     <link href="http://lib.sinaapp.com/js/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.2/css/font-awesome.min.css" rel="stylesheet">
     <style>
 
         #error{
@@ -111,14 +112,15 @@
                 <!--<img src="http://img01.taobaocdn.com/tps/i1/T1cKm3XkRpXXXXXXXX-48-48.gif" />-->
             <!--</div>-->
             <button id="work" class="btn btn-taobb btn-large" type="button" data-loading-text="tao.bb ..." autocomplete="off">tao.bb</button>
+
             <div class="btn-group">
                 <button id="qrcode" class="btn btn-taobb btn-large hide" style="font-size: 14px" data-placement="bottom">
                     <i class="icon-qrcode icon-white"></i>
                 </button>
                 <button id="copytoclip" class="btn btn-taobb btn-large hide" style="font-size: 14px" data-clipboard-target="urloutput">
-                    <i class="icon-share icon-white"></i>
+                    <i class="icon-copy icon-white"></i>
                 </button>
-                <button id="more" class="btn btn-taobb btn-large hide" type="button" data-loading-text="tao.bbing ..." autocomplete="off">再淘一个</button>
+                <button id="more" class="btn btn-taobb btn-large hide" type="button" data-loading-text="再淘一个..." autocomplete="off">再淘一个</button>
             </div>
         </div>
     </div>
@@ -153,24 +155,28 @@
 
 <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 <script src="http://lib.sinaapp.com/js/bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<script src="http://a.tbcdn.cn/app/dp/s/ZeroClipboard/ZeroClipboard.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.1.7/ZeroClipboard.min.js"></script>
 <script>
 
     $(function(){
 
 
 	var clip = new ZeroClipboard($("#copytoclip"), {
-		moviePath: "//a.tbcdn.cn/app/dp/s/ZeroClipboard/ZeroClipboard.swf",
+		moviePath: "//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.1.7/ZeroClipboard.swf",
 		allowScriptAccess : "always",
 		trustedDomains: ["*"]
 	});
+
+	var bridge = $(clip.htmlBridge);
 
 	clip.on('complete', function(){
 		showsuccess("已经复制到剪切板");
 	});
 
 	clip.on( 'mouseover', function(client) {
-		$(clip).hide();
+		if($("#work").is(":visible")){ //hack
+			//bridge.hide();
+		}
 	} );
 
         var input = $("#urlinput");
@@ -195,6 +201,11 @@
             error.slideDown();
         }
 
+	var reset = function(){
+		$("#working").hide();
+		$("#work").button("reset");
+	}
+
         $("#work").click(function(){
 
             var url = input.val();
@@ -208,10 +219,10 @@
             }
 
             $("#error").slideUp();
-            $(this).button("loading");
             $("#working").show();
+            $("#work").button("loading");
             $.post("/d/save",{url: input.val()},null,'json')
-                    .success(function(data){
+                    .always(function(data) {
                         var key = data["key"];
                         var err = data["err"] ? data["err"] : "发生错误请重试";
                         if(key){
@@ -222,26 +233,24 @@
                                         complete: function(){
                                             output.val("http://tao.bb/" + key);
                                             $("input").toggle();
-                                            $("button").toggle("fast");
+                                            $("button").toggle("fast", function(){
+						    reset();
+					    });
                                             $("input").select();
+					    bridge.show();
                                         }
                                     });
                         }else{
                             showerror(err);
+			    reset();
                         }
-                    })
-                    .error(function(){
-                        showerror("网络错误");
-                    })
-                    .complete(function() {
-                        $("#working").hide();
-                        $("#work").button("reset");
                     });
 
         });
 
         $("#more").click(function(){
-            output.val("");
+	    bridge.hide();
+	    $("#more").button("loading");
             $("#qrcode").popover("hide");
             $("input").toggle();
             input.animate({
@@ -251,6 +260,7 @@
                         complete: function(){
                             $("input").select();
                             $("button").toggle("fast");
+			    $("#more").button("reset");
                         }
                     });
         });
@@ -273,9 +283,11 @@
                 div.append($("<span>正在加载二维码.....</span>"))
                 var img = $('<img />');
                 img.prop("src", url);
+		img.hide();
 
                 img.load(function(){
                     div.find("span").remove();
+		    img.show();
                 });
 
                 div.css("width", 188);
